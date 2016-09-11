@@ -2,7 +2,7 @@
 #include "stack.h"
 stack<int> st;
 template <typename T>
-void outputStack(stack<T> _stack) {
+void popStack(stack<T> _stack) {
 	while (_stack.count()) {
 		std::cout << _stack.pop() << " ";
 	}
@@ -15,12 +15,12 @@ void f1() {
 	stack<int> st2;
 	st2.push(8);
 	st2 = st;
-	outputStack(st2);
+	popStack(st2);
 }
 
 int main() {
 	f1();
-	outputStack(st);
+	popStack(st);
 	system("pause");
 	return 0;
 }
