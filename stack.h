@@ -29,6 +29,9 @@ stack<T>::stack(const stack & _stack)
 
 template<typename T>
 stack<T>& stack<T>::operator=(const stack & _stack) {
+	if (this == &_stack) {
+		return *this;
+	}
 	if (array_size_ < _stack.count_) {
 		delete[] array_;
 		array_ = new T[_stack.array_size_];
