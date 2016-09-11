@@ -7,9 +7,6 @@ void f1() {
 	st.push(b);
 	st.pop();
 	st.push(a);
-	/*st.push(a);
-	st.push(b);
-	st.push(a);*/ //example of error situation
 }
 void outputStack() {
 	while (st.count()) {
