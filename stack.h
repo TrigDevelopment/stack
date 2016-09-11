@@ -8,10 +8,12 @@ public:
 	size_t count() const;
 	void push(T const &);
 	T pop();
+	~stack();
 private:
 	T* array_;
 	size_t array_size_;
 	size_t count_;
+	void rereserve(size_t new_size, size_t n_elements_to_copy);
 };
 
 template<typename T>
@@ -28,14 +30,8 @@ void stack<T>::push(T const & new_element)
 		count_++;
 	}
 	else {
-		T* new_array = new T(array_size_ + 1);
-		
-		for (size_t i = 0; i < array_size_; i++) {
-			new_array[i] = std::move(array_[i]);
-		}
-		new_array[array_size_] = new_element;
-		array_ = new_array;
-		array_size_++;
+		rereserve((array_size_ * 3) / 2 + 1, count_);
+		array_[count_] = new_element;
 		count_++;
 	}
 }
@@ -50,4 +46,22 @@ T stack<T>::pop()
 		count_--;
 	}
 	return array_[count_];
+}
+
+template<typename T>
+stack<T>::~stack()
+{
+	delete[] array_;
+}
+
+template<typename T>
+void stack<T>::rereserve(size_t new_size, size_t n_elements_to_copy) {
+	T* new_array = new T[new_size];
+
+	for (size_t i = 0; i < n_elements_to_copy; i++) {
+		new_array[i] = array_[i];
+	}
+	delete[] array_;
+	array_ = new_array;
+	array_size_ = (array_size_ * 3) / 2 + 1;
 }
