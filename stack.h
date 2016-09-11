@@ -63,5 +63,5 @@ void stack<T>::rereserve(size_t new_size, size_t n_elements_to_copy) {
 	}
 	delete[] array_;
 	array_ = new_array;
-	array_size_ = (array_size_ * 3) / 2 + 1;
+	array_size_ = new_size;
 }
