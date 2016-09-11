@@ -5,6 +5,8 @@ class stack
 {
 public:
 	stack() : array_(nullptr), array_size_(0), count_(0) {}
+	stack(const stack & _stack);
+	stack& operator=(const stack & _stack);
 	size_t count() const;
 	void push(T const &);
 	T pop();
@@ -16,6 +18,28 @@ private:
 	void rereserve(size_t new_size, size_t n_elements_to_copy);
 };
 
+template<typename T>
+stack<T>::stack(const stack & _stack)
+	: array_(new T[_stack.array_size_]),
+	array_size_(_stack.array_size_), count_(_stack.count_) {
+	for (size_t i = 0; i < count_; i++) {
+		array_[i] = _stack.array_[i];
+	}
+}
+
+template<typename T>
+stack<T>& stack<T>::operator=(const stack & _stack) {
+	if (array_size_ < _stack.count_) {
+		delete[] array_;
+		array_ = new T[_stack.array_size_];
+		array_size_ = _stack.array_size_;
+	}
+	for (size_t i = 0; i < _stack.count_; i++) {
+		array_[i] = _stack.array_[i];
+	}
+	count_ = _stack.count_;
+	return *this;
+}
 template<typename T>
 size_t stack<T>::count() const
 {
